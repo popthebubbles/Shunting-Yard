@@ -13,6 +13,8 @@ def precedence_lookup(token):
         return (3, 'left')
     elif token == '^':
         return (4, 'right')
+    elif token == '(':
+        return (0, 'left')
     else:
         return "error"
 
