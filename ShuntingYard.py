@@ -1,4 +1,5 @@
 import RPNInterpreter
+import re
 
 RPNP = RPNInterpreter.RPNParser
 
@@ -53,12 +54,28 @@ def shunting_yard(exp):
 
 def string_parse(inp):
     exp = []
-    for x in range(len(inp)):
-        if not inp[x] == ' ':
-            exp.append(inp[x])
+    num = None
+    for x in inp:
+        if x == '0' or x == '1' or x == '2' or x == '3' or x == '4' or x == '5' or x == '6' or x == '7' or x == '8' or x == '9':
+            if num == None:
+                num = x
+            else:
+                num = num + x
+        elif x == ' ':
+            if not num == None:
+                exp.append(num)
+                num = None
+        else:
+            if num == None:
+                exp.append(x)
+            else:
+                exp.append(num)
+                exp.append(x)
+                num = None
+
+    if not num == None:
+        exp.append(num)
     return exp
-
-
 exp = raw_input("Please enter an expression to be evaluated: \n")
 exp = string_parse(exp)
 exp = shunting_yard(exp)
